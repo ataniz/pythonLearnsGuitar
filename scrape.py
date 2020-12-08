@@ -34,9 +34,9 @@ def fix_melodic_and_octatonic(scales):
     interval = scales.pop('Melodic minor scale')
     scales['Melodic minor scale (descending)'] = interval.split('\n')[1][:13]
     intervals = scales.pop('Octatonic scale')
-    scales['Octatonic scale (Mode 1)'] = intervals.split('\n\n')[0]
-    scales['Octatonic scale (Mode 2)'] = intervals.split('\n\n')[1]
-    scales['Istrian scale'] = 'H-W-H-W-H'
+    scales['Octatonic (Mode 1)'] = intervals.split('\n\n')[0]
+    scales['Octatonic (Mode 2)'] = intervals.split('\n\n')[1]
+    scales['Istrian'] = 'H-W-H-W-H'
     return scales
 
 def convert2step(note):
@@ -53,10 +53,10 @@ def notes2steps(scales):
     for scale in scales:
         intervals = scales[scale]
         steps = [0]
-        for note in intervals.split('-'):
+        for note in intervals.split('-')[:-1]:
             base = steps[-1]
             steps.append(base + convert2step(note))
-        scales_with_steps[scale] = steps
+        scales_with_steps[scale.replace(" scale", "").strip()] = steps
     return scales_with_steps
 
 def get_scales():
